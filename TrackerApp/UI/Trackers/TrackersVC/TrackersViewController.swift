@@ -1,17 +1,14 @@
 import UIKit
 
-final class TrackersVC: UIViewController {
+final class TrackersViewController: UIViewController {
     private let trackerCategoryStore = TrackerCategoryStore()
     private let trackerRecordStore = TrackerRecordStore()
     
-    //список категорий и вложенных в них трекеров
-    private var categories: [TrackerCategoryModel] = []//MockData.categories
+    private var categories: [TrackerCategory] = []
     
-    //трекеры, которые были «выполнены» в выбранную дату
     private var completedTrackers: [TrackerRecord] = []
     
-    //отображается при поиске и/или изменении дня недели
-    private var visibleCategories: [TrackerCategoryModel] = []
+    private var visibleCategories: [TrackerCategory] = []
     private var currentDate: Int?
     private var searchText: String = ""
     private var widthAnchor: NSLayoutConstraint?
@@ -122,9 +119,9 @@ final class TrackersVC: UIViewController {
     }
     
     @objc func addTracker() {
-        let trackersVC = RegularOrIrregularEventVC()
-        trackersVC.delegate = self
-        present(trackersVC, animated: true)
+        let newTrackerVC = RegularOrIrregularEventVC()
+        newTrackerVC.delegate = self
+        present(newTrackerVC, animated: true)
     }
     
     @objc private func cancelEditingButtonAction() {
@@ -209,7 +206,7 @@ final class TrackersVC: UIViewController {
     }
 }
 
-extension TrackersVC: UICollectionViewDataSource {
+extension TrackersViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         let count = visibleCategories.count
@@ -252,7 +249,7 @@ extension TrackersVC: UICollectionViewDataSource {
     }
 }
 
-extension TrackersVC: UICollectionViewDelegateFlowLayout {
+extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -310,7 +307,7 @@ extension TrackersVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension TrackersVC: RegularOrIrregularEventVCDelegate {
+extension TrackersViewController: RegularOrIrregularEventVCDelegate {
     
     func createTracker(
         _ tracker: Tracker, categoryName: String
@@ -333,7 +330,7 @@ extension TrackersVC: RegularOrIrregularEventVCDelegate {
     }
 }
 
-extension TrackersVC {
+extension TrackersViewController {
     
     @objc func textFieldChanged() {
         searchText = searchTextField.text ?? ""
@@ -344,7 +341,7 @@ extension TrackersVC {
     }
 }
 
-extension TrackersVC: TrackersCollectionViewCellDelegate {
+extension TrackersViewController: TrackersCollectionViewCellDelegate {
     
     func completedTracker(id: UUID) {
         if let index = completedTrackers.firstIndex(where: { record in
@@ -361,7 +358,7 @@ extension TrackersVC: TrackersCollectionViewCellDelegate {
     }
 }
 
-extension TrackersVC: UITextFieldDelegate {
+extension TrackersViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         widthAnchor?.constant = 85
@@ -372,7 +369,7 @@ extension TrackersVC: UITextFieldDelegate {
     }
 }
 
-extension TrackersVC: TrackerCategoryStoreDelegate {
+extension TrackersViewController: TrackerCategoryStoreDelegate {
     
     func store(_ store: TrackerCategoryStore, didUpdate update: TrackerCategoryStoreUpdate) {
         updateCategories(with: trackerCategoryStore.trackerCategories)

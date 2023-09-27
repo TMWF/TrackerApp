@@ -1,8 +1,8 @@
 import UIKit
 
-class EditCategoryVC: UIViewController {
+final class EditCategoryVC: UIViewController {
     
-    var editableCategory: TrackerCategoryModel?
+    var editableCategory: TrackerCategory?
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()

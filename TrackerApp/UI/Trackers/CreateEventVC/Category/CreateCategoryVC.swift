@@ -1,10 +1,10 @@
 import UIKit
 
 protocol CreateCategoryVCDelegate {
-    func createdCategory(_ category: TrackerCategoryModel)
+    func createdCategory(_ category: TrackerCategory)
 }
 
-class CreateCategoryVC: UIViewController {
+final class CreateCategoryVC: UIViewController {
     var delegate: CreateCategoryVCDelegate?
     
     private lazy var titleLabel: UILabel = {
@@ -57,7 +57,7 @@ class CreateCategoryVC: UIViewController {
     
     @objc func addCategoryButtonAction() {
         if let categoryName = textField.text {
-            let category = TrackerCategoryModel(name: categoryName, trackers: [])
+            let category = TrackerCategory(name: categoryName, trackers: [])
             try? trackerCategoryStore.addNewTrackerCategory(category)
             delegate?.createdCategory(category)
             dismiss(animated: true)

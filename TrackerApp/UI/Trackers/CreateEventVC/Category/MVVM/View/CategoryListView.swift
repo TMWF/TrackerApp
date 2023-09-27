@@ -1,6 +1,6 @@
 import UIKit
 
-class CategoryListView: UIViewController {
+final class CategoryListView: UIViewController {
     private let viewModel: CategoryListViewModel
     
     private lazy var titleLabel: UILabel = {
@@ -53,7 +53,7 @@ class CategoryListView: UIViewController {
         return tableView
     }()
     
-    init(delegate: CategoryListViewModelDelegate?, selectedCategory: TrackerCategoryModel?) {
+    init(delegate: CategoryListViewModelDelegate?, selectedCategory: TrackerCategory?) {
         viewModel = CategoryListViewModel(delegate: delegate, selectedCategory: selectedCategory)
         super.init(nibName: nil, bundle: nil)
         viewModel.onChange = self.tableView.reloadData
@@ -112,7 +112,7 @@ class CategoryListView: UIViewController {
         present(createCategoryVC, animated: true)
     }
     
-    private func actionSheet(categoryToDelete: TrackerCategoryModel) {
+    private func actionSheet(categoryToDelete: TrackerCategory) {
         let alert = UIAlertController(title: "Эта категория точно не нужна?",
                                       message: nil,
                                       preferredStyle: .actionSheet)
@@ -218,7 +218,7 @@ extension CategoryListView: UITableViewDelegate {
 }
 
 extension CategoryListView: CreateCategoryVCDelegate {
-    func createdCategory(_ category: TrackerCategoryModel) {
+    func createdCategory(_ category: TrackerCategory) {
         viewModel.selectCategory(category)
         viewModel.selectCategory(with: category.name)
     }

@@ -1,6 +1,6 @@
 import UIKit
 
-struct TrackerCategoryModel {
+struct TrackerCategory {
     let name: String
     let trackers: [Tracker]
     

@@ -4,7 +4,7 @@ protocol RegularOrIrregularEventVCDelegate: AnyObject {
     func createTracker(_ tracker: Tracker, categoryName: String)
 }
 
-class RegularOrIrregularEventVC: UIViewController {
+final class RegularOrIrregularEventVC: UIViewController {
    
     public weak var delegate: RegularOrIrregularEventVCDelegate?
     

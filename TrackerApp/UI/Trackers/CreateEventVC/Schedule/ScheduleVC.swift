@@ -4,7 +4,7 @@ protocol ScheduleVCDelegate: AnyObject {
     func createSchedule(schedule: [WeekDay])
 }
 
-class ScheduleVC: UIViewController {
+final class ScheduleVC: UIViewController {
     
     public weak var delegate: ScheduleVCDelegate?
     var schedule: [WeekDay] = []

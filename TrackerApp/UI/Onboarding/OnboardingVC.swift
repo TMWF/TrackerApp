@@ -1,6 +1,6 @@
 import UIKit
 
-class OnboardingVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+final class OnboardingVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
     private lazy var pages: [UIViewController] = {
         return [blueVC, redVC]
