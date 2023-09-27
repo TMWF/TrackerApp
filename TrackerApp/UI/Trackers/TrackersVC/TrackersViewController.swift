@@ -185,8 +185,8 @@ final class TrackersViewController: UIViewController {
         currentDate = components.weekday
     }
     
-    private func updateCategories(with categories: [TrackerCategoryModel]) {
-        var newCategories: [TrackerCategoryModel] = []
+    private func updateCategories(with categories: [TrackerCategory]) {
+        var newCategories: [TrackerCategory] = []
         for category in categories {
             var newTrackers: [Tracker] = []
             for tracker in category.visibleTrackers(filterString: searchText) {
@@ -197,7 +197,7 @@ final class TrackersViewController: UIViewController {
                 }
             }
             if newTrackers.count > 0 {
-                let newCategory = TrackerCategoryModel(name: category.name, trackers: newTrackers)
+                let newCategory = TrackerCategory(name: category.name, trackers: newTrackers)
                 newCategories.append(newCategory)
             }
         }
@@ -312,8 +312,8 @@ extension TrackersViewController: RegularOrIrregularEventVCDelegate {
     func createTracker(
         _ tracker: Tracker, categoryName: String
     ) {
-        var categoryToUpdate: TrackerCategoryModel?
-        let categories: [TrackerCategoryModel] = trackerCategoryStore.trackerCategories
+        var categoryToUpdate: TrackerCategory?
+        let categories: [TrackerCategory] = trackerCategoryStore.trackerCategories
         for i in 0..<categories.count {
             if categories[i].name == categoryName {
                 categoryToUpdate = categories[i]
@@ -322,7 +322,7 @@ extension TrackersViewController: RegularOrIrregularEventVCDelegate {
         if categoryToUpdate != nil {
             try? trackerCategoryStore.addTracker(tracker, to: categoryToUpdate!)
         } else {
-            let newCategory = TrackerCategoryModel(name: categoryName, trackers: [tracker])
+            let newCategory = TrackerCategory(name: categoryName, trackers: [tracker])
             categoryToUpdate = newCategory
             try? trackerCategoryStore.addNewTrackerCategory(categoryToUpdate!)
         }

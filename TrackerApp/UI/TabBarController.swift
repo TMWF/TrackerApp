@@ -14,7 +14,7 @@ final class TabBarController: UITabBarController {
     }
     
     class func configure() -> UIViewController {
-        let trackersViewController = UINavigationController(rootViewController: TrackersVC())
+        let trackersViewController = UINavigationController(rootViewController: TrackersViewController())
         trackersViewController.tabBarItem.image = UIImage(named: "recordCircle")
         let statisticsViewController = UINavigationController(rootViewController: StatisticsViewController())
         statisticsViewController.tabBarItem.image = UIImage(named: "hare")

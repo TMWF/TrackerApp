@@ -38,7 +38,7 @@ final class CreateEventVC: UIViewController {
         }
     }
     
-    private var category: TrackerCategoryModel? = nil {
+    private var category: TrackerCategory? = nil {
         didSet {
             updateCreateEventButton()
         }
@@ -58,7 +58,7 @@ final class CreateEventVC: UIViewController {
     private var scheduleSubTitle: String = ""
     private var dayOfWeek: [String] = []
     
-    var selectedCategory: TrackerCategoryModel?
+    var selectedCategory: TrackerCategory?
     var categorySubTitle: String = ""
     
     public weak var delegate: CreateEventVCDelegate?
@@ -477,7 +477,7 @@ extension CreateEventVC: ScheduleVCDelegate {
 }
 
 extension CreateEventVC: CategoryListViewModelDelegate {
-    func createCategory(category: TrackerCategoryModel) {
+    func createCategory(category: TrackerCategory) {
         self.category = category
         let categoryString = category.name
         categorySubTitle = categoryString
