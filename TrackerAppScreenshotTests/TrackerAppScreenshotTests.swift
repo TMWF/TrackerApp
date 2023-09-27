@@ -1,11 +1,5 @@
-//
-//  TrackerAppScreenshotTests.swift
-//  TrackerAppScreenshotTests
-//
-//  Created by Leo Bonhart on 27.09.2023.
-//
-
 import XCTest
+import SnapshotTesting
 
 final class TrackerAppScreenshotTests: XCTestCase {
 
