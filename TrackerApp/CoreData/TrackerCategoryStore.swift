@@ -103,7 +103,7 @@ final class TrackerCategoryStore: NSObject {
         let category = fetchedResultsController.fetchedObjects?.first {
             $0.nameCategory == categoryToDelete.name
         }
-        if let category = category {
+        if let category {
             context.delete(category)
             try context.save()
         }
