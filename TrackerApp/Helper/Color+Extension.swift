@@ -1,8 +1,22 @@
 import UIKit
 
+final class Colors {
+    var viewBackgroundColor = UIColor.systemBackground
+    var datePickerTintColor = UIColor { (traits) -> UIColor in
+        let isDarkMode = traits.userInterfaceStyle == .dark
+        return isDarkMode ? UIColor.black : UIColor.black
+    }
+}
+
 extension UIColor {
     
     static var backgroundColor: UIColor { UIColor(named: "backgroundColor") ?? UIColor.red }
+    static let GradientColor1 = UIColor(named: "gradientColor1") ?? UIColor.red
+    static let GradientColor2 = UIColor(named: "gradientColor2") ?? UIColor.green
+    static let GradientColor3 = UIColor(named: "gradientColor3") ?? UIColor.blue
+    static let datePickerColor = UIColor(named: "datePickerColor") ?? UIColor.gray
+    static let datePickerTintColor = UIColor(named: "datePickerTintColor") ?? UIColor.black
+    static let searchTextFieldColor = UIColor(named: "searchTextFieldColor") ?? UIColor.gray
     static var findColor: UIColor { UIColor(named: "findColor") ?? UIColor.gray }
     static var YPGray: UIColor { UIColor(named: "ypGray") ?? UIColor.gray }
     static var YPRed: UIColor { UIColor(named: "ypRed") ?? UIColor.red }
@@ -27,7 +41,7 @@ extension UIColor {
     static var Color16: UIColor { UIColor(named: "Color16") ?? UIColor.red }
     static var Color17: UIColor { UIColor(named: "Color17") ?? UIColor.red }
     static var Color18: UIColor { UIColor(named: "Color18") ?? UIColor.red }
-    static var switchColor: UIColor { ypBlue }
+    static var switchColor = UIColor(named: "switchColor") ?? UIColor.blue
     
     var hexString: String {
         let components = self.cgColor.components
@@ -42,4 +56,3 @@ extension UIColor {
         )
     }
 }
-
