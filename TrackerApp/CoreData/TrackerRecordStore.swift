@@ -23,7 +23,7 @@ protocol TrackerRecordStoreDelegate: AnyObject {
     )
 }
 
-final class TrackerRecordStore:NSObject {
+final class TrackerRecordStore: NSObject {
     weak var delegate: TrackerRecordStoreDelegate?
     
     private let context: NSManagedObjectContext
