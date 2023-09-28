@@ -1,14 +1,14 @@
 import UIKit
 
 final class EditCategoryVC: UIViewController {
-    
+    private let colours = Colors()
     var editableCategory: TrackerCategory?
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .ypBlack
         label.text = "Редактирование категории"
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -30,7 +30,7 @@ final class EditCategoryVC: UIViewController {
     private lazy var editCategoryButton: UIButton = {
         let button = UIButton()
         button.setTitle("Готово", for: .normal)
-        button.titleLabel?.textColor = .white
+        button.setTitleColor(.ypWhite, for: .normal)
         button.backgroundColor = .gray
         button.isEnabled = true
         button.layer.cornerRadius = 16
@@ -43,7 +43,7 @@ final class EditCategoryVC: UIViewController {
     
     @objc func textFieldChanged() {
         if textField.text != "" {
-            editCategoryButton.backgroundColor = .black
+            editCategoryButton.backgroundColor = .ypBlack
             editCategoryButton.isEnabled = true
         } else {
             editCategoryButton.backgroundColor = .gray
@@ -61,7 +61,7 @@ final class EditCategoryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = colours.viewBackgroundColor
         textField.becomeFirstResponder()
         addSubviews()
         setupLayout()

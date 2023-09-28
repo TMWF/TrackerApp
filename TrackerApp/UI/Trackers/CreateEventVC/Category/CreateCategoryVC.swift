@@ -5,13 +5,15 @@ protocol CreateCategoryVCDelegate {
 }
 
 final class CreateCategoryVC: UIViewController {
+    private let colours = Colors()
     var delegate: CreateCategoryVCDelegate?
+    private let trackerCategoryStore = TrackerCategoryStore()
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .ypBlack
         label.text = "Новая категория"
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -34,7 +36,7 @@ final class CreateCategoryVC: UIViewController {
     private lazy var addCategoryButton: UIButton = {
         let button = UIButton()
         button.setTitle("Готово", for: .normal)
-        button.titleLabel?.textColor = .white
+        button.setTitleColor(.ypWhite, for: .normal)
         button.backgroundColor = .gray
         button.isEnabled = true
         button.layer.cornerRadius = 16
@@ -43,11 +45,9 @@ final class CreateCategoryVC: UIViewController {
         return button
     }()
     
-    private let trackerCategoryStore = TrackerCategoryStore()
-    
     @objc func textFieldChanged() {
         if textField.text != "" {
-            addCategoryButton.backgroundColor = .black
+            addCategoryButton.backgroundColor = .YPBlack
             addCategoryButton.isEnabled = true
         } else {
             addCategoryButton.backgroundColor = .gray
@@ -66,7 +66,7 @@ final class CreateCategoryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = colours.viewBackgroundColor
         addSubviews()
         setupLayout()
     }
