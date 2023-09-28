@@ -11,9 +11,9 @@ final class Colors {
 extension UIColor {
     
     static var backgroundColor: UIColor { UIColor(named: "backgroundColor") ?? UIColor.red }
-    static let GradientColor1 = UIColor(named: "gradientColor1") ?? UIColor.red
-    static let GradientColor2 = UIColor(named: "gradientColor2") ?? UIColor.green
-    static let GradientColor3 = UIColor(named: "gradientColor3") ?? UIColor.blue
+    static let gradientColour1 = UIColor(named: "gradientColor1") ?? UIColor.red
+    static let radientColour2 = UIColor(named: "gradientColor2") ?? UIColor.green
+    static let gradientColour3 = UIColor(named: "gradientColor3") ?? UIColor.blue
     static let datePickerColor = UIColor(named: "datePickerColor") ?? UIColor.gray
     static let datePickerTintColor = UIColor(named: "datePickerTintColor") ?? UIColor.black
     static let searchTextFieldColor = UIColor(named: "searchTextFieldColor") ?? UIColor.gray
