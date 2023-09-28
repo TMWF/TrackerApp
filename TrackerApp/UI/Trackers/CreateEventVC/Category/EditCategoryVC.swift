@@ -1,7 +1,6 @@
 import UIKit
 
 final class EditCategoryVC: UIViewController {
-    private let colours = Colors()
     var editableCategory: TrackerCategory?
     
     private lazy var titleLabel: UILabel = {
@@ -61,7 +60,7 @@ final class EditCategoryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = colours.viewBackgroundColor
+        view.backgroundColor = .systemBackground
         textField.becomeFirstResponder()
         addSubviews()
         setupLayout()

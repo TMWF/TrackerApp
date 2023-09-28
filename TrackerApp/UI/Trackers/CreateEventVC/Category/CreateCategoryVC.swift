@@ -5,7 +5,6 @@ protocol CreateCategoryVCDelegate {
 }
 
 final class CreateCategoryVC: UIViewController {
-    private let colours = Colors()
     var delegate: CreateCategoryVCDelegate?
     private let trackerCategoryStore = TrackerCategoryStore()
     
@@ -66,7 +65,7 @@ final class CreateCategoryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = colours.viewBackgroundColor
+        view.backgroundColor = .systemBackground
         addSubviews()
         setupLayout()
     }
