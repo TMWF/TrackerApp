@@ -56,7 +56,7 @@ final class FiltersViewController: UIViewController {
     }
 }
 
-extension FiltersVC: UITableViewDataSource {
+extension FiltersViewController: UITableViewDataSource {
     func tableView(
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
@@ -97,7 +97,7 @@ extension FiltersVC: UITableViewDataSource {
     }
 }
 
-extension FiltersVC: UITableViewDelegate {
+extension FiltersViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
     }
