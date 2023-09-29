@@ -10,7 +10,7 @@ final class CreateCategoryVC: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .ypBlack
+        label.textColor = .YPBlack
         label.text = "Новая категория"
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -19,9 +19,9 @@ final class CreateCategoryVC: UIViewController {
     
     private lazy var textField: UITextField = {
         let textField = UITextField()
-        textField.indent(size: 10)
+        textField.indent(by: 10)
         textField.placeholder = "Введите название категории"
-        textField.textColor = .ypBlack
+        textField.textColor = .YPBlack
         textField.backgroundColor = .backgroundColor
         textField.layer.cornerRadius = 16
         textField.font = .systemFont(ofSize: 17)
@@ -35,7 +35,7 @@ final class CreateCategoryVC: UIViewController {
     private lazy var addCategoryButton: UIButton = {
         let button = UIButton()
         button.setTitle("Готово", for: .normal)
-        button.setTitleColor(.ypWhite, for: .normal)
+        button.setTitleColor(.YPWhite, for: .normal)
         button.backgroundColor = .gray
         button.isEnabled = true
         button.layer.cornerRadius = 16

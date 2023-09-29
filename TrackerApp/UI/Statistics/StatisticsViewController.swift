@@ -2,13 +2,12 @@ import UIKit
 
 final class StatisticsViewController: UIViewController {
     
-    private let colors = Colors()
     private let trackerRecordStore = TrackerRecordStore()
     private var completedTrackers: [TrackerRecord] = []
     
     private lazy var statisticsTitle: UILabel = {
         let label = UILabel()
-        label.textColor = .ypBlack
+        label.textColor = .YPBlack
         label.text = NSLocalizedString("statistics", tableName: "Localizable", comment: "statistics")
         label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -24,9 +23,9 @@ final class StatisticsViewController: UIViewController {
     
     private lazy var noStatisticsLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .ypBlack
+        label.textColor = .YPBlack
         label.text = "Анализировать пока нечего"
-        label.font = .mediumSystemFont(ofSize: 12)
+        label.font = .systemFont(ofSize: 12, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -39,7 +38,7 @@ final class StatisticsViewController: UIViewController {
     
     private lazy var resultTitle: UILabel = {
         let label = UILabel()
-        label.textColor = .ypBlack
+        label.textColor = .YPBlack
         label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +47,7 @@ final class StatisticsViewController: UIViewController {
     
     private lazy var resultSubTitle: UILabel = {
         let label = UILabel()
-        label.textColor = .ypBlack
+        label.textColor = .YPBlack
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +56,7 @@ final class StatisticsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = colors.viewBackgroundColor
+        view.backgroundColor = .systemBackground
         
         addStatisticsTitle()
         addNoStatisticsImage()

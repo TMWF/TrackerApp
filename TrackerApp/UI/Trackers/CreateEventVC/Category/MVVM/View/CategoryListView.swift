@@ -5,7 +5,7 @@ final class CategoryListView: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .ypBlack
+        label.textColor = .YPBlack
         label.text = "Категория"
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -21,7 +21,7 @@ final class CategoryListView: UIViewController {
     
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.textColor = .ypBlack
+        label.textColor = .YPBlack
         label.text = "Привычки и события можно объединять по смыслу"
         label.numberOfLines = 2
         label.textAlignment = .center
@@ -33,8 +33,8 @@ final class CategoryListView: UIViewController {
     private lazy var addCategoryButton: UIButton = {
         let button = UIButton()
         button.setTitle("Добавить категорию", for: .normal)
-        button.setTitleColor(.ypWhite, for: .normal)
-        button.backgroundColor = .ypBlack
+        button.setTitleColor(.YPWhite, for: .normal)
+        button.backgroundColor = .YPBlack
         button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(addCategoryButtonAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -44,8 +44,8 @@ final class CategoryListView: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.identifier)
-        tableView.separatorColor = .ypGray
-        tableView.backgroundColor = .ypWhite
+        tableView.separatorColor = .YPGray
+        tableView.backgroundColor = .YPWhite
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsMultipleSelection = false
