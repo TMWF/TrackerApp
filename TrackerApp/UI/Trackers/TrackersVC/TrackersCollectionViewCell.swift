@@ -20,6 +20,18 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         return trackerView
     }()
     
+    public var menuView: UIView {
+        return trackerView
+    }
+    
+    private lazy var pinImageView: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "pinSquare")
+        image.isHidden = false
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
     private lazy var emojiView: UIView = {
         let emojiView = UIView()
         emojiView.backgroundColor = UIColor(white: 1, alpha: 0.5)
@@ -36,7 +48,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     
     private lazy var trackerNameLabel: UILabel = {
         let trackerNameLabel = UILabel()
-        trackerNameLabel.font = .systemFont(ofSize: 12)
+        trackerNameLabel.font = .systemFont(ofSize: 12, weight: .medium)
         trackerNameLabel.numberOfLines = 2
         trackerNameLabel.text = "Название трекера "
         trackerNameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -55,8 +67,8 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         let image = UIImage(named: "plus")
         checkButton.setImage(image, for: .normal)
         checkButton.addTarget(self, action: #selector(didTapCheckButton), for: .touchUpInside)
-        checkButton.backgroundColor = .white
-        checkButton.tintColor = .white
+        checkButton.backgroundColor = .YPWhite
+        checkButton.tintColor = .YPWhite
         checkButton.layer.cornerRadius = 17
         checkButton.translatesAutoresizingMaskIntoConstraints = false
         return checkButton
@@ -66,6 +78,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         contentView.addSubview(trackerView)
+        trackerView.addSubview(pinImageView)
         trackerView.addSubview(emojiView)
         emojiView.addSubview(emojiLabel)
         trackerView.addSubview(trackerNameLabel)
@@ -78,6 +91,11 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
             trackerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             trackerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -58),
             trackerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            
+            pinImageView.heightAnchor.constraint(equalToConstant: 12),
+            pinImageView.widthAnchor.constraint(equalToConstant: 8),
+            pinImageView.topAnchor.constraint(equalTo: trackerView.topAnchor, constant: 18),
+            pinImageView.trailingAnchor.constraint(equalTo: trackerView.trailingAnchor, constant: -12),
             
             emojiView.heightAnchor.constraint(equalToConstant: 24),
             emojiView.widthAnchor.constraint(equalToConstant: 24),
@@ -121,17 +139,15 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         emoji: String,
         isCompleted: Bool,
         isEnabled: Bool,
-        completedCount: Int
+        completedCount: Int,
+        pinned: Bool
     ) {
-        let mod10 = completedCount % 10
-        let mod100 = completedCount % 100
-        let not10To20 = mod100 < 10 || mod100 > 20
-        var str = "\(completedCount) "
         trackerId = id
         trackerNameLabel.text = name
         trackerView.backgroundColor = color
         checkButton.backgroundColor = color
         emojiLabel.text = emoji
+        pinImageView.isHidden = !pinned
         isCompletedToday = isCompleted
         checkButton.setImage(isCompletedToday ? UIImage(systemName: "checkmark")! : UIImage(systemName: "plus")!, for: .normal)
         if isCompletedToday == true {
@@ -141,24 +157,6 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         }
         
         checkButton.isEnabled = isEnabled
-        
-        if completedCount == 0 {
-            str += "дней"
-        } else if mod10 == 1 && not10To20 {
-            str += "день"
-        } else if (mod10 == 2 || mod10 == 3 || mod10 == 4) && not10To20 {
-            str += "дня"
-        } else {
-            str += "дней"
-        }
-        resultLabel.text = str
-    }
-}
-
-extension UIImage {
-    func withAlpha(_ a: CGFloat) -> UIImage {
-        return UIGraphicsImageRenderer(size: size, format: imageRendererFormat).image { (_) in
-            draw(in: CGRect(origin: .zero, size: size), blendMode: .normal, alpha: a)
-        }
+        resultLabel.text = String.localizedStringWithFormat(NSLocalizedString("numberOfDay",tableName: "LocalizableDict", comment: "Число дней"), completedCount)
     }
 }

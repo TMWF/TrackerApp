@@ -10,7 +10,7 @@ final class WeekDayTableViewCell: UITableViewCell {
     
     lazy var label: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .YPBlack
         label.font = .systemFont(ofSize: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -56,5 +56,3 @@ final class WeekDayTableViewCell: UITableViewCell {
         delegate?.stateChanged(for: weekDay, isOn: control.isOn)
     }
 }
-    
-   
