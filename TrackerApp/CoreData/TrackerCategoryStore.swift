@@ -254,4 +254,3 @@ extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
         }
     }
 }
-

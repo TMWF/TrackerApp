@@ -1,11 +1,6 @@
 import UIKit
 
 extension UIColor {
-//    static var datePickerTintColor = UIColor { (traits) -> UIColor in
-//        let isDarkMode = traits.userInterfaceStyle == .dark
-//        return isDarkMode ? UIColor.black : UIColor.black
-//    }
-    
     static var backgroundColor: UIColor { UIColor(named: "backgroundColor") ?? UIColor.red }
     static let gradientColour1 = UIColor(named: "gradientColor1") ?? UIColor.red
     static let gradientColour2 = UIColor(named: "gradientColor2") ?? UIColor.green
