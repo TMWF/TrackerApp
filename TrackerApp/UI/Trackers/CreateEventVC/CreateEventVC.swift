@@ -354,7 +354,7 @@ final class CreateEventVC: UIViewController {
             let completedCount = completedTrackers.filter({ record in
                 record.idTracker == editTracker.id
             }).count
-            completedDaysLabel.text = String.localizedStringWithFormat(NSLocalizedString("numberOfDay", comment: "дней"), completedCount)
+            completedDaysLabel.text = String.localizedStringWithFormat(NSLocalizedString("numberOfDay", tableName: "LocalizableDict", comment: "дней"), completedCount)
             if completedTrackers.firstIndex(where: { record in
                 record.idTracker == editTracker.id &&
                 record.date.yearMonthDayComponents == editTrackerDate.yearMonthDayComponents

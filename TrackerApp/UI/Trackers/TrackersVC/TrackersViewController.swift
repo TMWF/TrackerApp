@@ -305,6 +305,7 @@ final class TrackersViewController: UIViewController {
         visibleCategories = newCategories
         self.pinnedTrackers = pinnedTrackers
         collectionView.reloadData()
+        activityIndicator.stopAnimating()
     }
     
     func deleteTracker(_ tracker: Tracker) {
