@@ -8,18 +8,19 @@ final class ScheduleVC: UIViewController {
     
     public weak var delegate: ScheduleVCDelegate?
     var schedule: [WeekDay] = []
+    
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .YPBlack
         label.text = "Расписание"
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = .YPWhite
         scrollView.frame = view.bounds
         scrollView.contentSize = contentSize
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +33,7 @@ final class ScheduleVC: UIViewController {
     
     private lazy var buttonBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .YPWhite
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -40,8 +41,8 @@ final class ScheduleVC: UIViewController {
     private lazy var enterButton: UIButton = {
         let button = UIButton()
         button.setTitle("Готово", for: .normal)
-        button.titleLabel?.textColor = .white
-        button.backgroundColor = .ypBlack
+        button.setTitleColor(.YPWhite, for: .normal)
+        button.backgroundColor = .YPBlack
         button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(enterButtonAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +55,8 @@ final class ScheduleVC: UIViewController {
         var height = 75*7
         tableView.register(WeekDayTableViewCell.self, forCellReuseIdentifier: WeekDayTableViewCell.identifier)
         tableView.layer.cornerRadius = 16
-        tableView.separatorColor = .ypGray
+        tableView.separatorColor = .YPGray
+        tableView.backgroundColor = .YPWhite
         tableView.frame = CGRect(x: 16, y: 16, width: Int(width), height: Int(height))
         tableView.dataSource = self
         tableView.delegate = self
@@ -64,7 +66,7 @@ final class ScheduleVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         addSubviews()
         setupLayout()
     }
@@ -146,7 +148,6 @@ extension ScheduleVC: UITableViewDelegate {
 extension ScheduleVC: WeekDayTableViewCellDelegate {
     
     func stateChanged(for day: WeekDay, isOn: Bool) {
-        
         if isOn {
             schedule.append(day)
         } else {
@@ -156,4 +157,3 @@ extension ScheduleVC: WeekDayTableViewCellDelegate {
         }
     }
 }
-

@@ -1,26 +1,26 @@
 import UIKit
 
 final class EditCategoryVC: UIViewController {
-    
     var editableCategory: TrackerCategory?
+    private let trackerCategoryStore = TrackerCategoryStore()
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .YPBlack
         label.text = "Редактирование категории"
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var textField: UITextField = {
         let textField = UITextField()
-        textField.textColor = .ypBlack
+        textField.textColor = .YPBlack
         textField.backgroundColor = .backgroundColor
         textField.layer.cornerRadius = 16
         textField.font = .systemFont(ofSize: 17)
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.indent(size: 10)
+        textField.indent(by: 10)
         textField.text = editableCategory?.name
         UITextField.appearance().clearButtonMode = .whileEditing
         textField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
@@ -30,7 +30,7 @@ final class EditCategoryVC: UIViewController {
     private lazy var editCategoryButton: UIButton = {
         let button = UIButton()
         button.setTitle("Готово", for: .normal)
-        button.titleLabel?.textColor = .white
+        button.setTitleColor(.YPWhite, for: .normal)
         button.backgroundColor = .gray
         button.isEnabled = true
         button.layer.cornerRadius = 16
@@ -39,11 +39,9 @@ final class EditCategoryVC: UIViewController {
         return button
     }()
     
-    private let trackerCategoryStore = TrackerCategoryStore()
-    
     @objc func textFieldChanged() {
         if textField.text != "" {
-            editCategoryButton.backgroundColor = .black
+            editCategoryButton.backgroundColor = .YPBlack
             editCategoryButton.isEnabled = true
         } else {
             editCategoryButton.backgroundColor = .gray
@@ -61,7 +59,7 @@ final class EditCategoryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         textField.becomeFirstResponder()
         addSubviews()
         setupLayout()

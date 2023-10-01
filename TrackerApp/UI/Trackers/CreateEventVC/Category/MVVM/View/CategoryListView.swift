@@ -5,14 +5,14 @@ final class CategoryListView: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .YPBlack
         label.text = "Категория"
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private lazy var imageView: UIImageView = {
+    private lazy var placeholderImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "star")
@@ -21,11 +21,11 @@ final class CategoryListView: UIViewController {
     
     private lazy var label: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .YPBlack
         label.text = "Привычки и события можно объединять по смыслу"
         label.numberOfLines = 2
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 12)
+        label.font = .systemFont(ofSize: 12, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -33,8 +33,8 @@ final class CategoryListView: UIViewController {
     private lazy var addCategoryButton: UIButton = {
         let button = UIButton()
         button.setTitle("Добавить категорию", for: .normal)
-        button.titleLabel?.textColor = .white
-        button.backgroundColor = .ypBlack
+        button.setTitleColor(.YPWhite, for: .normal)
+        button.backgroundColor = .YPBlack
         button.layer.cornerRadius = 16
         button.addTarget(self, action: #selector(addCategoryButtonAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -44,8 +44,8 @@ final class CategoryListView: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CategoryTableViewCell.self, forCellReuseIdentifier: CategoryTableViewCell.identifier)
-        tableView.separatorColor = .ypGray
-        tableView.backgroundColor = .white
+        tableView.separatorColor = .YPGray
+        tableView.backgroundColor = .YPWhite
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsMultipleSelection = false
@@ -65,14 +65,14 @@ final class CategoryListView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         addSubviews()
         setupLayout()
     }
     
     private func addSubviews() {
         view.addSubview(titleLabel)
-        view.addSubview(imageView)
+        view.addSubview(placeholderImageView)
         view.addSubview(label)
         view.addSubview(addCategoryButton)
         view.addSubview(tableView)
@@ -83,13 +83,13 @@ final class CategoryListView: UIViewController {
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 27),
             
-            imageView.widthAnchor.constraint(equalToConstant: 80),
-            imageView.heightAnchor.constraint(equalToConstant: 80),
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            placeholderImageView.widthAnchor.constraint(equalToConstant: 80),
+            placeholderImageView.heightAnchor.constraint(equalToConstant: 80),
+            placeholderImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            placeholderImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
-            label.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
-            label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
+            label.centerXAnchor.constraint(equalTo: placeholderImageView.centerXAnchor),
+            label.topAnchor.constraint(equalTo: placeholderImageView.bottomAnchor, constant: 8),
             label.heightAnchor.constraint(equalToConstant: 50),
             label.widthAnchor.constraint(equalToConstant: 200),
             
@@ -187,6 +187,9 @@ extension CategoryListView: UITableViewDataSource {
         } else {
             categoryCell.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
             categoryCell.contentView.layer.cornerRadius = 0
+        }
+        if viewModel.categories.count == 1 {
+            categoryCell.contentView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         }
         categoryCell.checkmarkImage.isHidden = viewModel.selectedCategory?.name != categoryName
         categoryCell.selectionStyle = .none

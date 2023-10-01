@@ -6,21 +6,22 @@ protocol CreateCategoryVCDelegate {
 
 final class CreateCategoryVC: UIViewController {
     var delegate: CreateCategoryVCDelegate?
+    private let trackerCategoryStore = TrackerCategoryStore()
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .YPBlack
         label.text = "Новая категория"
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var textField: UITextField = {
         let textField = UITextField()
-        textField.indent(size: 10)
+        textField.indent(by: 10)
         textField.placeholder = "Введите название категории"
-        textField.textColor = .ypBlack
+        textField.textColor = .YPBlack
         textField.backgroundColor = .backgroundColor
         textField.layer.cornerRadius = 16
         textField.font = .systemFont(ofSize: 17)
@@ -34,7 +35,7 @@ final class CreateCategoryVC: UIViewController {
     private lazy var addCategoryButton: UIButton = {
         let button = UIButton()
         button.setTitle("Готово", for: .normal)
-        button.titleLabel?.textColor = .white
+        button.setTitleColor(.YPWhite, for: .normal)
         button.backgroundColor = .gray
         button.isEnabled = true
         button.layer.cornerRadius = 16
@@ -43,11 +44,9 @@ final class CreateCategoryVC: UIViewController {
         return button
     }()
     
-    private let trackerCategoryStore = TrackerCategoryStore()
-    
     @objc func textFieldChanged() {
         if textField.text != "" {
-            addCategoryButton.backgroundColor = .black
+            addCategoryButton.backgroundColor = .YPBlack
             addCategoryButton.isEnabled = true
         } else {
             addCategoryButton.backgroundColor = .gray
@@ -66,7 +65,7 @@ final class CreateCategoryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         addSubviews()
         setupLayout()
     }

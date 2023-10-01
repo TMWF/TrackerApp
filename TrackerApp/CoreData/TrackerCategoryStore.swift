@@ -23,9 +23,8 @@ protocol TrackerCategoryStoreDelegate: AnyObject {
     )
 }
 
-class TrackerCategoryStore: NSObject {
+final class TrackerCategoryStore: NSObject {
     
-    private let trackerStore = TrackerStore()
     private let context: NSManagedObjectContext
     private var fetchedResultsController: NSFetchedResultsController<TrackerCategoryCoreData>!
     weak var delegate: TrackerCategoryStoreDelegate?
@@ -36,7 +35,12 @@ class TrackerCategoryStore: NSObject {
     
     convenience override init() {
         let context = DatabaseManager.shared.context
-        try! self.init(context: context)
+        self.init(context: context)
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            assertionFailure("TrackerCategoryStore fetch failed")
+        }
     }
     
     var trackerCategories: [TrackerCategory] {
@@ -47,7 +51,7 @@ class TrackerCategoryStore: NSObject {
         return trackerCategories
     }
     
-    init(context: NSManagedObjectContext) throws {
+    init(context: NSManagedObjectContext) {
         self.context = context
         super.init()
         
@@ -63,7 +67,22 @@ class TrackerCategoryStore: NSObject {
         )
         controller.delegate = self
         self.fetchedResultsController = controller
-        try controller.performFetch()
+    }
+    
+    func category(_ categoryName: String) -> TrackerCategoryCoreData? {
+        return fetchedResultsController.fetchedObjects?.first {
+            $0.nameCategory == categoryName
+        }
+    }
+    
+    func category(forTracker tracker: Tracker) -> TrackerCategory? {
+        let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "ANY trackers.id == %@", tracker.id.uuidString)
+        guard let trackerCategoriesCoreData = try? context.fetch(request) else { return nil }
+        guard let categories = try? trackerCategoriesCoreData.map({ try self.trackerCategory(from: $0)})
+        else { return nil }
+        return categories.first
     }
     
     func addNewTrackerCategory(_ trackerCategory: TrackerCategory) throws {
@@ -84,7 +103,7 @@ class TrackerCategoryStore: NSObject {
         let category = fetchedResultsController.fetchedObjects?.first {
             $0.nameCategory == categoryToDelete.name
         }
-        if let category = category {
+        if let category {
             context.delete(category)
             try context.save()
         }
@@ -127,16 +146,22 @@ class TrackerCategoryStore: NSObject {
         }
         let trackers: [Tracker] = data.trackers?.compactMap { tracker in
             guard let trackerCoreData = (tracker as? TrackerCoreData) else { return nil }
+            
             guard let id = trackerCoreData.id,
                   let nameTracker = trackerCoreData.nameTracker,
                   let color = trackerCoreData.color?.color,
-                  let emoji = trackerCoreData.emoji else { return nil }
+                  let emoji = trackerCoreData.emoji 
+            else { return nil }
+            
+            let pinned = trackerCoreData.pinned
+            
             return Tracker(
                 id: id,
                 name: nameTracker,
                 color: color,
                 emoji: emoji,
-                schedule: trackerCoreData.schedule?.compactMap { WeekDay(rawValue: $0) }
+                schedule: trackerCoreData.schedule?.compactMap { WeekDay(rawValue: $0) },
+                pinned: pinned
             )
         } ?? []
         return TrackerCategory(
@@ -180,10 +205,10 @@ extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
         delegate?.store(
             self,
             didUpdate: TrackerCategoryStoreUpdate(
-                insertedIndexes: insertedIndexes!,
-                deletedIndexes: deletedIndexes!,
-                updatedIndexes: updatedIndexes!,
-                movedIndexes: movedIndexes!
+                insertedIndexes: insertedIndexes ?? [],
+                deletedIndexes: deletedIndexes ?? [],
+                updatedIndexes: updatedIndexes ?? [],
+                movedIndexes: movedIndexes ?? []
             )
         )
         insertedIndexes = nil
@@ -201,20 +226,31 @@ extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
     ) {
         switch type {
         case .insert:
-            guard let indexPath = newIndexPath else { fatalError() }
+            guard let indexPath = newIndexPath else {
+                assertionFailure("Insertion IndexPath is unexpectedly nil")
+                return
+            }
             insertedIndexes?.insert(indexPath.item)
         case .delete:
-            guard let indexPath = indexPath else { fatalError() }
+            guard let indexPath = indexPath else {
+                assertionFailure("Deletion IndexPath is unexpectedly nil")
+                return
+            }
             deletedIndexes?.insert(indexPath.item)
         case .update:
-            guard let indexPath = indexPath else { fatalError() }
+            guard let indexPath = indexPath else {
+                assertionFailure("Updation IndexPath is unexpectedly nil")
+                return
+            }
             updatedIndexes?.insert(indexPath.item)
         case .move:
-            guard let oldIndexPath = indexPath, let newIndexPath = newIndexPath else { fatalError() }
+            guard let oldIndexPath = indexPath, let newIndexPath = newIndexPath else {
+                assertionFailure("move indexPath is unexpectedly nil")
+                return
+            }
             movedIndexes?.insert(.init(oldIndex: oldIndexPath.item, newIndex: newIndexPath.item))
         @unknown default:
-            fatalError()
+            assertionFailure("unknown case")
         }
     }
 }
-
